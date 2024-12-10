@@ -23,10 +23,13 @@ const App = () => {
 
   // функция по обновлению времени музыки
   const onPlaying = () => {
-    const duration = audioElem.current.duration;
-    const ct = audioElem.current.currentTime;
+    // длина аудио-файла
+    const duration = audioElem.current.duration || 0;
+    // текущее время аудио-фалйа
+    const ct = audioElem.current.currentTime || 0;
 
-    setCurrentSong({ ...currentSong, "progress": ct / duration * 100, "length": duration })
+    // обновление данных => прогресс: текущее значение музыки (может быть 0 или другое), длина: длина аудио-файла
+    setCurrentSong({ ...currentSong, "progress": ct, "length": duration })
   }
 
   return (

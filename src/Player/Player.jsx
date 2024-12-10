@@ -4,9 +4,6 @@ import { BsFillPlayCircleFill, BsFillPauseCircleFill, BsFillSkipStartCircleFill,
 
 const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSong, songs }) => {
 
-  // значение ползунка
-  const [musicRange, setMusicRange] = useState(0);
-
   // место события на разметке (input range)
   const clickRef = useRef();
 
@@ -20,15 +17,15 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
     // отслеживаем значение input range
     const offset = Number(e.target.value);
 
-    // замена значений
+    // замена значений текущего времени аудио файла на значение ползунка
     audioElem.current.currentTime = offset;
-    setMusicRange(offset);
 
-    // let width = clickRef.current.clientWidth;
-    // const offset = e.nativeEvent.offsetX;
-
-    // const divprogress = offset / width * 100;
-    // audioElem.current.currentTime = divprogress / 100 * currentSong.length;
+    // Обновляем состояние currentSong
+    setCurrentSong({
+      ...currentSong,
+      progress: offset, // значение ползунка
+      length: audioElem.current.duration // Убедимся, что длина актуальна
+    });
   }
 
   // пропуск музыки на предыдущую музыку
@@ -41,15 +38,13 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
       setCurrentSong(songs[index - 1])
     }
     audioElem.current.currentTime = 0;
-    setMusicRange(0);
-    
   }
-  
-  
+
+
   // пропуск музыки на следующую музыку
   const skiptoNext = () => {
     const index = songs.findIndex(x => x.title === currentSong.title);
-    
+
     if (index === songs.length - 1) {
       setCurrentSong(songs[0])
     }
@@ -57,8 +52,6 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
       setCurrentSong(songs[index + 1])
     }
     audioElem.current.currentTime = 0;
-    setMusicRange(0);
-
   }
 
   return (
@@ -68,7 +61,14 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
       </div>
       <div className="navigation">
         <div className="navigation_wrapper">
-          <input type="range" min={0} max={currentSong.length} value={musicRange} onChange={checkWidth} ref={clickRef}/>
+          <input
+            type="range"
+            min={0}
+            max={currentSong.length}
+            value={currentSong.progress || 0} // или currentSong.progress
+            onChange={checkWidth}
+            ref={clickRef}
+          />
         </div>
       </div>
       <div className="controls">
