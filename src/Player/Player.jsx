@@ -23,6 +23,12 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
     // замена значений
     audioElem.current.currentTime = offset;
     setMusicRange(offset);
+
+    // let width = clickRef.current.clientWidth;
+    // const offset = e.nativeEvent.offsetX;
+
+    // const divprogress = offset / width * 100;
+    // audioElem.current.currentTime = divprogress / 100 * currentSong.length;
   }
 
   // пропуск музыки на предыдущую музыку
@@ -62,7 +68,7 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
       </div>
       <div className="navigation">
         <div className="navigation_wrapper">
-          <input type="range" min={0} max={currentSong.length} defaultValue={0} value={musicRange} onChange={checkWidth} ref={clickRef}/>
+          <input type="range" min={0} max={currentSong.length} value={musicRange} onChange={checkWidth} ref={clickRef}/>
         </div>
       </div>
       <div className="controls">
