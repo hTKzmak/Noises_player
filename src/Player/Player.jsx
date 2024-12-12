@@ -1,11 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import './player.scss';
 import { BsFillPlayCircleFill, BsFillPauseCircleFill, BsFillSkipStartCircleFill, BsFillSkipEndCircleFill } from 'react-icons/bs';
 
-const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSong, songs }) => {
+const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSong, songs, changeDuration, inputRef }) => {
 
-  // место события на разметке (input range)
-  const clickRef = useRef();
+  // https://webspe.net/tools/en/input-range/
 
   // функция паузы и воспроизведения
   const PlayPause = () => {
@@ -26,6 +25,8 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
       progress: offset, // значение ползунка
       length: audioElem.current.duration // Убедимся, что длина актуальна
     });
+
+    changeDuration(e.target, e.target.value)
   }
 
   // пропуск музыки на предыдущую музыку
@@ -38,6 +39,7 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
       setCurrentSong(songs[index - 1])
     }
     audioElem.current.currentTime = 0;
+    changeDuration(inputRef.current, 0)
   }
 
 
@@ -52,12 +54,22 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
       setCurrentSong(songs[index + 1])
     }
     audioElem.current.currentTime = 0;
+    changeDuration(inputRef.current, 0)
   }
 
   return (
     <div className='player_container'>
-      <div className="title">
-        <p>{currentSong.title}</p>
+      <div className="controls">
+        <BsFillSkipStartCircleFill className='btn_action' onClick={skipBack} />
+        {isplaying ? <BsFillPauseCircleFill className='btn_action pp' onClick={PlayPause} /> : <BsFillPlayCircleFill className='btn_action pp' onClick={PlayPause} />}
+        <BsFillSkipEndCircleFill className='btn_action' onClick={skiptoNext} />
+      </div>
+      <div className="music_info">
+        <img src={currentSong.artwork} alt="#" />
+        <div className="music_info_text">
+          <p className='title'>{currentSong.title}</p>
+          <p className='artist'>{currentSong.artist}</p>
+        </div>
       </div>
       <div className="navigation">
         <div className="navigation_wrapper">
@@ -65,16 +77,11 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
             type="range"
             min={0}
             max={currentSong.length}
-            value={currentSong.progress || 0} // или currentSong.progress
+            value={currentSong.progress || 0}
             onChange={checkWidth}
-            ref={clickRef}
+            ref={inputRef}
           />
         </div>
-      </div>
-      <div className="controls">
-        <BsFillSkipStartCircleFill className='btn_action' onClick={skipBack} />
-        {isplaying ? <BsFillPauseCircleFill className='btn_action pp' onClick={PlayPause} /> : <BsFillPlayCircleFill className='btn_action pp' onClick={PlayPause} />}
-        <BsFillSkipEndCircleFill className='btn_action' onClick={skiptoNext} />
       </div>
     </div>
 
