@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './player.scss';
 import { BsFillPlayCircleFill, BsFillPauseCircleFill, BsFillSkipStartCircleFill, BsFillSkipEndCircleFill } from 'react-icons/bs';
+import volume from '../assets/volume.svg'
+import mix from '../assets/mix.svg'
+import repeat from '../assets/repeat.svg'
+import download from '../assets/download.svg'
 
-const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSong, songs, changeDuration, inputRef }) => {
+const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSong, songs }) => {
 
-  // https://webspe.net/tools/en/input-range/
+  // место события на разметке (input range)
+  const inputRef = useRef();
 
   // функция паузы и воспроизведения
   const PlayPause = () => {
@@ -25,9 +30,18 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
       progress: offset, // значение ползунка
       length: audioElem.current.duration // Убедимся, что длина актуальна
     });
-
-    changeDuration(e.target, e.target.value)
   }
+
+  // стилизуем фон ползунка
+  useEffect(() => {
+    const ratio = (inputRef.current.value / currentSong.length) * 100 || 0;
+
+    const activeColor = "#f7f7f7";
+    const inactiveColor = "#626262";
+
+    inputRef.current.style.background = `linear-gradient(90deg, ${activeColor} ${ratio}%, ${inactiveColor} ${ratio}%)`
+
+  }, [currentSong.progress, currentSong.length]);
 
   // пропуск музыки на предыдущую музыку
   const skipBack = () => {
@@ -39,9 +53,7 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
       setCurrentSong(songs[index - 1])
     }
     audioElem.current.currentTime = 0;
-    changeDuration(inputRef.current, 0)
   }
-
 
   // пропуск музыки на следующую музыку
   const skiptoNext = () => {
@@ -54,7 +66,6 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
       setCurrentSong(songs[index + 1])
     }
     audioElem.current.currentTime = 0;
-    changeDuration(inputRef.current, 0)
   }
 
   return (
@@ -82,6 +93,12 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
             ref={inputRef}
           />
         </div>
+      </div>
+      <div className="options">
+        <button><img src={volume} alt="volume" /></button>
+        <button><img src={repeat} alt="repeat" /></button>
+        <button><img src={mix} alt="mix" /></button>
+        <button><img src={download} alt="download" /></button>
       </div>
     </div>
 
