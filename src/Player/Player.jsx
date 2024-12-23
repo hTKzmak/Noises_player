@@ -71,9 +71,21 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
   return (
     <div className='player_container'>
       <div className="controls">
-        <BsFillSkipStartCircleFill className='btn_action' onClick={skipBack} />
-        {isplaying ? <BsFillPauseCircleFill className='btn_action pp' onClick={PlayPause} /> : <BsFillPlayCircleFill className='btn_action pp' onClick={PlayPause} />}
-        <BsFillSkipEndCircleFill className='btn_action' onClick={skiptoNext} />
+        <button onClick={skipBack}>
+          <BsFillSkipStartCircleFill className='btn_action' />
+        </button>
+        {isplaying ?
+          <button onClick={PlayPause}>
+            <BsFillPauseCircleFill className='btn_action pp' />
+          </button>
+          :
+          <button onClick={PlayPause}>
+            <BsFillPlayCircleFill className='btn_action pp' />
+          </button>
+        }
+        <button onClick={skiptoNext}>
+          <BsFillSkipEndCircleFill className='btn_action' />
+        </button>
       </div>
       <div className="music_info">
         <img src={currentSong.artwork} alt="#" />
