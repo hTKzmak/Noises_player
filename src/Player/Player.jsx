@@ -1,15 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './player.scss';
 import { BsFillPlayCircleFill, BsFillPauseCircleFill, BsFillSkipStartCircleFill, BsFillSkipEndCircleFill } from 'react-icons/bs';
-import volume from '../assets/volume.svg'
-import mix from '../assets/mix.svg'
-import repeat from '../assets/repeat.svg'
-import download from '../assets/download.svg'
+import { ReactComponent as Volume } from '../assets/volume.svg'
+import { ReactComponent as Mix } from '../assets/mix.svg'
+import { ReactComponent as Repeat } from '../assets/repeat.svg'
+import { ReactComponent as Download } from '../assets/download.svg'
 
 const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSong, songs }) => {
 
   // место события на разметке (input range)
   const inputRef = useRef();
+
+  const volumeRef = useRef();
+  const [showVolume, setShowVolume] = useState(false);
+  const [volumeCount, setVolumeCount] = useState(1);
 
   // функция паузы и воспроизведения
   const PlayPause = () => {
@@ -68,6 +72,22 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
     audioElem.current.currentTime = 0;
   }
 
+
+  // опции
+
+  // скачивание файла
+  const downloadMusic = () => {
+    const url = window.URL.createObjectURL(new Blob([currentSong]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute(
+      'download',
+      `${currentSong.title}.mp3`,
+    );
+    document.body.appendChild(link);
+    link.click();
+  }
+
   return (
     <div className='player_container'>
       <div className="controls">
@@ -107,12 +127,41 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
         </div>
       </div>
       <div className="options">
-        <button><img src={volume} alt="volume" /></button>
-        <button><img src={repeat} alt="repeat" /></button>
-        <button><img src={mix} alt="mix" /></button>
-        <button><img src={download} alt="download" /></button>
+        <button onClick={() => setShowVolume(!showVolume)}>
+          <Volume />
+        </button>
+
+        {showVolume ? (
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volumeCount}
+            ref={volumeRef}
+            onChange={(e) => {
+              setVolumeCount(e.target.value)
+              audioElem.current.volume = e.target.value
+            }}
+          />
+        )
+          :
+          (
+            <>
+              <button>
+                <Repeat />
+              </button>
+              <button>
+                <Mix />
+              </button>
+              <button onClick={downloadMusic}>
+                <Download />
+              </button>
+            </>
+          )
+        }
       </div>
-    </div>
+    </div >
 
   )
 }
