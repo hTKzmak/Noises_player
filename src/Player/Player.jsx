@@ -76,16 +76,13 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
   // опции
 
   // скачивание файла
-  const downloadMusic = () => {
-    const url = window.URL.createObjectURL(new Blob([currentSong]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute(
-      'download',
-      `${currentSong.title}.mp3`,
-    );
-    document.body.appendChild(link);
-    link.click();
+  const downloadMusic = async () => {    
+    const a = document.createElement('a');
+    a.href = currentSong.url;
+    a.download = 'filename'; // Укажите нужное имя файла
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   }
 
   return (
