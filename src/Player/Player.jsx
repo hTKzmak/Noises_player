@@ -76,7 +76,7 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
   // опции
 
   // скачивание файла
-  const downloadMusic = async () => {    
+  const downloadMusic = async () => {
     const a = document.createElement('a');
     a.href = currentSong.url;
     a.download = 'filename'; // Укажите нужное имя файла
@@ -104,23 +104,25 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
           <BsFillSkipEndCircleFill className='btn_action' />
         </button>
       </div>
-      <div className="music_info">
-        <img src={currentSong.artwork} alt="#" />
-        <div className="music_info_text">
-          <p className='title'>{currentSong.title}</p>
-          <p className='artist'>{currentSong.artist}</p>
+      <div className="info-and-navigation">
+        <div className="music_info">
+          <img src={currentSong.artwork} alt="#" />
+          <div className="music_info_text">
+            <p className='title'>{currentSong.title}</p>
+            <p className='artist'>{currentSong.artist}</p>
+          </div>
         </div>
-      </div>
-      <div className="navigation">
-        <div className="navigation_wrapper">
-          <input
-            type="range"
-            min={0}
-            max={currentSong.length}
-            value={currentSong.progress || 0}
-            onChange={checkWidth}
-            ref={inputRef}
-          />
+        <div className="navigation">
+          <div className="navigation_wrapper">
+            <input
+              type="range"
+              min={0}
+              max={currentSong.length}
+              value={currentSong.progress || 0}
+              onChange={checkWidth}
+              ref={inputRef}
+            />
+          </div>
         </div>
       </div>
       <div className="options">
