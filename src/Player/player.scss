@@ -5,11 +5,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    // justify-content: center;
     background-color: #000;
     padding: 20px 80px;
     gap: 15px;
-    // gap: 5rem;
 
     position: absolute;
     bottom: 0;
@@ -36,11 +34,25 @@
             &:hover {
                 color: white;
             }
+
+            @media screen and (max-width: 1080px) {
+                font-size: 40px;
+            }
         }
 
         .pp {
             font-size: 45px;
             color: #fafafa;
+
+            @media screen and (max-width: 1080px) {
+                font-size: 60px;
+            }
+        }
+
+        @media screen and (max-width: 1080px) {
+            order: 3;
+
+            gap: 5vw;
         }
     }
 
@@ -48,21 +60,43 @@
         display: flex;
         align-items: center;
         gap: 20px;
-        width: 270px;
+        width: 200px;
 
         img {
             width: 50px;
             border-radius: 10px;
+
+            @media screen and (max-width: 1080px) {
+                max-width: 380px;
+                width: 80vw;
+            }
         }
 
         .title {
             font-size: 18px;
             color: #fff;
+
+            @media screen and (max-width: 1080px) {
+                font-size: 28px;
+            }
         }
 
         .artist {
             font-size: 12px;
             color: #ffffff7f;
+
+            @media screen and (max-width: 1080px) {
+                font-size: 18px;
+            }
+        }
+
+        @media screen and (max-width: 1080px) {
+            flex-direction: column;
+            gap: 26px;
+            align-items: start;
+            width: auto;
+
+            order: 1;
         }
     }
     .navigation {
@@ -74,7 +108,16 @@
             input {
                 max-width: 761px;
                 width: 40vw;
+
+                @media screen and (max-width: 1080px) {
+                    max-width: 374px;
+                    width: 80vw;
+                }
             }
+        }
+
+        @media screen and (max-width: 1080px) {
+            order: 2;
         }
     }
     .options {
@@ -95,5 +138,17 @@
                 width: 25px;
             }
         }
+
+        @media screen and (max-width: 1080px) {
+            gap: 10vw;
+
+            order: 4;
+        }
+    }
+
+    @media screen and (max-width: 1080px) {
+        flex-direction: column;
+        top: 0;
+        padding: 25px;
     }
 }
