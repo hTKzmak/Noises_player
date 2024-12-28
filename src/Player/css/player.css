@@ -79,7 +79,7 @@
     max-width: 380px;
   }
 }
-@media screen and (max-height: 620px) {
+@media screen and (max-width: 768px) and (max-height: 620px) {
   .player_container .info-and-navigation .music_info img {
     width: 50px;
   }
@@ -115,32 +115,39 @@
     align-items: start;
   }
 }
-@media screen and (max-height: 620px) {
+@media screen and (max-width: 768px) and (max-height: 620px) {
   .player_container .info-and-navigation .music_info {
     flex-direction: row;
     align-items: center;
   }
 }
-.player_container .info-and-navigation .navigation {
-  padding: 0;
-}
-.player_container .info-and-navigation .navigation .navigation_wrapper {
-  min-width: 100%;
-}
-.player_container .info-and-navigation .navigation .navigation_wrapper input {
+.player_container .info-and-navigation input {
   max-width: 761px;
   width: 40vw;
+}
+@media screen and (max-width: 768px) {
+  .player_container .info-and-navigation input {
+    max-width: unset;
+    width: 100%;
+  }
 }
 @media screen and (max-width: 1150px) {
   .player_container .info-and-navigation {
     display: flex;
     align-items: start;
     flex-direction: column;
+    gap: 5px;
   }
 }
 @media screen and (max-width: 768px) {
   .player_container .info-and-navigation {
     order: 1;
+  }
+}
+@media screen and (max-width: 768px) and (max-height: 620px) {
+  .player_container .info-and-navigation {
+    gap: 25px;
+    width: 100%;
   }
 }
 .player_container .options {

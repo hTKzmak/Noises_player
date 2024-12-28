@@ -112,18 +112,14 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
             <p className='artist'>{currentSong.artist}</p>
           </div>
         </div>
-        <div className="navigation">
-          <div className="navigation_wrapper">
-            <input
-              type="range"
-              min={0}
-              max={currentSong.length}
-              value={currentSong.progress || 0}
-              onChange={checkWidth}
-              ref={inputRef}
-            />
-          </div>
-        </div>
+        <input
+          type="range"
+          min={0}
+          max={currentSong.length}
+          value={currentSong.progress || 0}
+          onChange={checkWidth}
+          ref={inputRef}
+        />
       </div>
       <div className="options">
         <button onClick={() => setShowVolume(!showVolume)}>
