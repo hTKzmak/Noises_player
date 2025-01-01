@@ -3,10 +3,11 @@ import './player.scss';
 import { BsFillPlayCircleFill, BsFillPauseCircleFill, BsFillSkipStartCircleFill, BsFillSkipEndCircleFill } from 'react-icons/bs';
 import { ReactComponent as Volume } from '../assets/volume.svg'
 import { ReactComponent as Mix } from '../assets/mix.svg'
+import { ReactComponent as MixOn } from '../assets/mix_on.svg'
 import { ReactComponent as Repeat } from '../assets/repeat.svg'
 import { ReactComponent as Download } from '../assets/download.svg'
 
-const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSong, songs }) => {
+const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs }) => {
 
   // место события на разметке (input range)
   const inputRef = useRef();
@@ -15,9 +16,11 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
   const [showVolume, setShowVolume] = useState(false);
   const [volumeCount, setVolumeCount] = useState(1);
 
+  const [mixMusic, setMixMusic] = useState(false);
+
   // функция паузы и воспроизведения
   const PlayPause = () => {
-    setisplaying(!isplaying);
+    setIsPlaying(!isplaying);
   }
 
   // проверяет на каком промежутке нахожится ползунов
@@ -63,20 +66,26 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
   const skiptoNext = () => {
     const index = songs.findIndex(x => x.title === currentSong.title);
 
-    if (index === songs.length - 1) {
-      setCurrentSong(songs[0])
+    if (mixMusic) {
+      // Если перемешивание включено, выбираем случайную песню
+      mixMusicFunc()
+    } else {
+      // Если перемешивание выключено, переходим к следующей песне
+      if (index === songs.length - 1) {
+        setCurrentSong(songs[0]);
+      } else {
+        setCurrentSong(songs[index + 1]);
+      }
     }
-    else {
-      setCurrentSong(songs[index + 1])
-    }
-    audioElem.current.currentTime = 0;
-  }
+
+    audioElem.current.currentTime = 0; // Сброс времени проигрывания
+  };
 
 
-  // опции
 
+  // ОПЦИИ:
   // скачивание файла
-  const downloadMusic = async () => {
+  const downloadMusicFunc = async () => {
     const a = document.createElement('a');
     a.href = currentSong.url;
     a.download = 'filename'; // Укажите нужное имя файла
@@ -84,6 +93,18 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
     a.click();
     a.remove();
   }
+
+  // перемешивание музыки 
+  const mixMusicFunc = () => {
+    const randomIndex = Math.floor(Math.random() * songs.length);
+    setCurrentSong(songs[randomIndex]);
+  }
+
+  useEffect(() => {
+    if (mixMusic && currentSong.progress === currentSong.length) {
+      mixMusicFunc()
+    }
+  }, [currentSong.length, currentSong.progress, mixMusic, mixMusicFunc])
 
   return (
     <div className='player_container'>
@@ -146,10 +167,10 @@ const Player = ({ audioElem, isplaying, setisplaying, currentSong, setCurrentSon
               <button>
                 <Repeat />
               </button>
-              <button>
-                <Mix />
+              <button onClick={() => { setMixMusic(!mixMusic) }}>
+                {mixMusic === false ? <Mix /> : <MixOn />}
               </button>
-              <button onClick={downloadMusic}>
+              <button onClick={downloadMusicFunc}>
                 <Download />
               </button>
             </>

@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from 'react';
 
 const App = () => {
   const [songs, setSongs] = useState(songsdata);
-  const [isplaying, setisplaying] = useState(false);
+  const [isplaying, setIsPlaying] = useState(false);
   const [currentSong, setCurrentSong] = useState(songsdata[0]);
 
   // место события на разметке (audio тег)
@@ -40,7 +40,7 @@ const App = () => {
         setSongs={setSongs}
 
         isplaying={isplaying}
-        setisplaying={setisplaying}
+        setIsPlaying={setIsPlaying}
         
         audioElem={audioElem}
 
