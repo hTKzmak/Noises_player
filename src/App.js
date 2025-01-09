@@ -8,6 +8,8 @@ const App = () => {
   const [isplaying, setIsPlaying] = useState(false);
   const [currentSong, setCurrentSong] = useState(songsdata[0]);
 
+  const [mixMusic, setMixMusic] = useState(false);
+
   // место события на разметке (audio тег)
   const audioElem = useRef();
 
@@ -40,7 +42,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying} onEnded={mixMusicFunc}/>
+      <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying} onEnded={mixMusic ? mixMusicFunc : ''}/>
       <Player
         songs={songs}
         setSongs={setSongs}
@@ -54,6 +56,8 @@ const App = () => {
         setCurrentSong={setCurrentSong}
 
         mixMusicFunc={mixMusicFunc}
+        mixMusic={mixMusic}
+        setMixMusic={setMixMusic}
       />
     </div>
   );

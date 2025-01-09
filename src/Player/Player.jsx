@@ -11,7 +11,7 @@ import { ReactComponent as RepeatOff } from '../assets/repeat_off.svg'
 import { ReactComponent as RepeatList } from '../assets/repeat_list.svg'
 import { ReactComponent as RepeatMusic } from '../assets/repeat_music.svg'
 
-const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusicFunc }) => {
+const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusicFunc, mixMusic, setMixMusic }) => {
 
   // место события на разметке (input range)
   const inputRef = useRef();
@@ -20,8 +20,6 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
   const [showVolume, setShowVolume] = useState(false);
   const [volumeCount, setVolumeCount] = useState(1);
   const [repeatValue, setRepeatValue] = useState(false)
-
-  const [mixMusic, setMixMusic] = useState(false);
 
   // функция паузы и воспроизведения
   const PlayPause = () => {
