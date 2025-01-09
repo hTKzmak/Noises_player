@@ -4,10 +4,12 @@ import { BsFillPlayCircleFill, BsFillPauseCircleFill, BsFillSkipStartCircleFill,
 import { ReactComponent as Volume } from '../assets/volume.svg'
 import { ReactComponent as VolumeOff } from '../assets/volume_off.svg'
 import { ReactComponent as VolumeHalf } from '../assets/volume_half.svg'
-import { ReactComponent as Mix } from '../assets/mix.svg'
+import { ReactComponent as MixOff } from '../assets/mix_off.svg'
 import { ReactComponent as MixOn } from '../assets/mix_on.svg'
-import { ReactComponent as Repeat } from '../assets/repeat.svg'
 import { ReactComponent as Download } from '../assets/download.svg'
+import { ReactComponent as RepeatOff } from '../assets/repeat_off.svg'
+import { ReactComponent as RepeatList } from '../assets/repeat_list.svg'
+import { ReactComponent as RepeatMusic } from '../assets/repeat_music.svg'
 
 const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusicFunc }) => {
 
@@ -17,6 +19,7 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
   const volumeRef = useRef();
   const [showVolume, setShowVolume] = useState(false);
   const [volumeCount, setVolumeCount] = useState(1);
+  const [repeatValue, setRepeatValue] = useState(false)
 
   const [mixMusic, setMixMusic] = useState(false);
 
@@ -177,11 +180,11 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
           :
           (
             <>
-              <button>
-                <Repeat />
+              <button onClick={() => setRepeatValue(!repeatValue)}>
+                {!repeatValue ? <RepeatOff /> : <RepeatList/>}
               </button>
               <button onClick={() => { setMixMusic(!mixMusic) }}>
-                {mixMusic === false ? <Mix /> : <MixOn />}
+                {mixMusic === false ? <MixOff /> : <MixOn />}
               </button>
               <button onClick={downloadMusicFunc}>
                 <Download />

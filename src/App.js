@@ -36,7 +36,6 @@ const App = () => {
   const mixMusicFunc = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * songs.length);
     setCurrentSong(songs[randomIndex]);
-    console.log(randomIndex);
   }, [setCurrentSong, songs]);
 
   return (
