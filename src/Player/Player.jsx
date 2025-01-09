@@ -18,8 +18,12 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
 
   const volumeRef = useRef();
   const [showVolume, setShowVolume] = useState(false);
+
+  // значение громкости
   const [volumeCount, setVolumeCount] = useState(1);
-  const [repeatValue, setRepeatValue] = useState(false)
+
+  // повторение музыки (1 - не повторяется ни список, ни музыка; 2 - повторяется только список; 3 - повторяется только трек)
+  const [repeatValue, setRepeatValue] = useState(1)
 
   // функция паузы и воспроизведения
   const PlayPause = () => {
@@ -100,11 +104,24 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
   }
 
   // функционал перемешивания музыки в App.js (MixMusicFunc)
-  // перемешивание музыки (может повторно воспроизводиться музыка, которая была прошлой)
-  // пример вывода индекса в консоли
-  // 1 Player.jsx:110
-  // 4 Player.jsx:110 (4 раза выводится)
-  // 5 Player.jsx:110
+
+  // измение значения repeatValue для 3-х кликов, для повторения воспроизведения музыки
+  const repeatChangerFunc = () => {
+    switch (repeatValue) {
+      case 1:
+        setRepeatValue(2)
+        break
+      case 2:
+        setRepeatValue(3)
+        break
+      case 3:
+        setRepeatValue(1)
+        break
+      default:
+        setRepeatValue(1)
+        break
+    }
+  }
 
   return (
     <div className='player_container'>
@@ -170,16 +187,31 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
             value={volumeCount}
             ref={volumeRef}
             onChange={(e) => {
-              setVolumeCount(e.target.value)
               audioElem.current.volume = e.target.value
+              setVolumeCount(e.target.value)
             }}
           />
         )
           :
           (
             <>
-              <button onClick={() => setRepeatValue(!repeatValue)}>
-                {!repeatValue ? <RepeatOff /> : <RepeatList/>}
+              <button onClick={() => repeatChangerFunc()}>
+                {/* {repeatValue ? <RepeatOff /> : <RepeatList />} */}
+                {(() => {
+                  if (repeatValue === 1) {
+                    return (
+                      <RepeatOff />
+                    )
+                  } else if (repeatValue === 2) {
+                    return (
+                      <RepeatList />
+                    )
+                  } else {
+                    return (
+                      <RepeatMusic />
+                    )
+                  }
+                })()}
               </button>
               <button onClick={() => { setMixMusic(!mixMusic) }}>
                 {mixMusic === false ? <MixOff /> : <MixOn />}

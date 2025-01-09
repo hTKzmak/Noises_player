@@ -34,7 +34,11 @@ const App = () => {
     setCurrentSong({ ...currentSong, "progress": ct, "length": duration })
   }
 
-  // перемешивание музыки
+  // перемешивание музыки (может повторно воспроизводиться музыка, которая была прошлой)
+  // пример вывода индекса в консоли
+  // 1 Player.jsx:110
+  // 4 Player.jsx:110 (4 раза выводится)
+  // 5 Player.jsx:110
   const mixMusicFunc = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * songs.length);
     setCurrentSong(songs[randomIndex]);
@@ -42,7 +46,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying} onEnded={mixMusic ? mixMusicFunc : ''}/>
+      <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying} onEnded={() => mixMusic ? mixMusicFunc : ''} />
       <Player
         songs={songs}
         setSongs={setSongs}
