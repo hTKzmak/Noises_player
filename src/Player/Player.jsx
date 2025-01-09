@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import './player.scss';
 import { BsFillPlayCircleFill, BsFillPauseCircleFill, BsFillSkipStartCircleFill, BsFillSkipEndCircleFill } from 'react-icons/bs';
 import { ReactComponent as Volume } from '../assets/volume.svg'
+import { ReactComponent as VolumeOff } from '../assets/volume_off.svg'
+import { ReactComponent as VolumeHalf } from '../assets/volume_half.svg'
 import { ReactComponent as Mix } from '../assets/mix.svg'
 import { ReactComponent as MixOn } from '../assets/mix_on.svg'
 import { ReactComponent as Repeat } from '../assets/repeat.svg'
@@ -66,17 +68,19 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
   const skiptoNext = () => {
     const index = songs.findIndex(x => x.title === currentSong.title);
 
+
+    // Если перемешивание выключено, переходим к следующей песне
     if (mixMusic) {
-      // Если перемешивание включено, выбираем случайную песню
       mixMusicFunc()
-    } else {
-      // Если перемешивание выключено, переходим к следующей песне
+    }
+    else {
       if (index === songs.length - 1) {
         setCurrentSong(songs[0]);
       } else {
         setCurrentSong(songs[index + 1]);
       }
     }
+
 
     audioElem.current.currentTime = 0; // Сброс времени проигрывания
   };
@@ -95,16 +99,28 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
   }
 
   // перемешивание музыки 
-  const mixMusicFunc = () => {
+
+  // перемешивание музыки (может повторно воспроизводиться музыка, которая была прошлой)
+  // пример вывода индекса в консоли
+  // 1 Player.jsx:110
+  // 4 Player.jsx:110 (4 раза выводится)
+  // 5 Player.jsx:110
+
+  const mixMusicFunc = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * songs.length);
     setCurrentSong(songs[randomIndex]);
-  }
 
-  useEffect(() => {
-    if (mixMusic && currentSong.progress === currentSong.length) {
-      mixMusicFunc()
-    }
-  }, [currentSong.length, currentSong.progress, mixMusic, mixMusicFunc])
+    console.log(randomIndex)
+
+  }, [setCurrentSong, songs])
+
+
+  // useEffect(() => {
+  //   if (mixMusic && currentSong.progress === currentSong.length) {
+  //     mixMusicFunc()
+  //   }
+  // }, [mixMusic, mixMusicFunc, currentSong.progress, currentSong.length])
+
 
   return (
     <div className='player_container'>
@@ -144,7 +160,21 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
       </div>
       <div className="options">
         <button onClick={() => setShowVolume(!showVolume)}>
-          <Volume />
+          {(() => {
+            if (volumeCount === '0') {
+              return (
+                <VolumeOff />
+              )
+            } else if (volumeCount <= '0.5') {
+              return (
+                <VolumeHalf />
+              )
+            } else {
+              return (
+                <Volume />
+              )
+            }
+          })()}
         </button>
 
         {showVolume ? (
