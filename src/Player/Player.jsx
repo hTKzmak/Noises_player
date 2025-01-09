@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './player.scss';
 import { BsFillPlayCircleFill, BsFillPauseCircleFill, BsFillSkipStartCircleFill, BsFillSkipEndCircleFill } from 'react-icons/bs';
 import { ReactComponent as Volume } from '../assets/volume.svg'
@@ -9,7 +9,7 @@ import { ReactComponent as MixOn } from '../assets/mix_on.svg'
 import { ReactComponent as Repeat } from '../assets/repeat.svg'
 import { ReactComponent as Download } from '../assets/download.svg'
 
-const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs }) => {
+const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusicFunc }) => {
 
   // место события на разметке (input range)
   const inputRef = useRef();
@@ -98,29 +98,12 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
     a.remove();
   }
 
-  // перемешивание музыки 
-
+  // функционал перемешивания музыки в App.js (MixMusicFunc)
   // перемешивание музыки (может повторно воспроизводиться музыка, которая была прошлой)
   // пример вывода индекса в консоли
   // 1 Player.jsx:110
   // 4 Player.jsx:110 (4 раза выводится)
   // 5 Player.jsx:110
-
-  const mixMusicFunc = useCallback(() => {
-    const randomIndex = Math.floor(Math.random() * songs.length);
-    setCurrentSong(songs[randomIndex]);
-
-    console.log(randomIndex)
-
-  }, [setCurrentSong, songs])
-
-
-  // useEffect(() => {
-  //   if (mixMusic && currentSong.progress === currentSong.length) {
-  //     mixMusicFunc()
-  //   }
-  // }, [mixMusic, mixMusicFunc, currentSong.progress, currentSong.length])
-
 
   return (
     <div className='player_container'>

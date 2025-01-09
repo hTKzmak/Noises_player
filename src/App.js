@@ -1,7 +1,7 @@
 import './App.css';
 import Player from './Player/Player';
 import { songsdata } from './Player/audios';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 const App = () => {
   const [songs, setSongs] = useState(songsdata);
@@ -32,20 +32,29 @@ const App = () => {
     setCurrentSong({ ...currentSong, "progress": ct, "length": duration })
   }
 
+  // перемешивание музыки
+  const mixMusicFunc = useCallback(() => {
+    const randomIndex = Math.floor(Math.random() * songs.length);
+    setCurrentSong(songs[randomIndex]);
+    console.log(randomIndex);
+  }, [setCurrentSong, songs]);
+
   return (
     <div className="App">
-      <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying}/>
+      <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying} onEnded={mixMusicFunc}/>
       <Player
         songs={songs}
         setSongs={setSongs}
 
         isplaying={isplaying}
         setIsPlaying={setIsPlaying}
-        
+
         audioElem={audioElem}
 
         currentSong={currentSong}
         setCurrentSong={setCurrentSong}
+
+        mixMusicFunc={mixMusicFunc}
       />
     </div>
   );
