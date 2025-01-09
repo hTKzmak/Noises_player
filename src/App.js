@@ -46,7 +46,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying} onEnded={() => mixMusic ? mixMusicFunc : ''} />
+      <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying} onEnded={mixMusic ? mixMusicFunc : null} />
       <Player
         songs={songs}
         setSongs={setSongs}

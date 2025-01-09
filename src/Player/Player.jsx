@@ -73,7 +73,6 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
   const skiptoNext = () => {
     const index = songs.findIndex(x => x.title === currentSong.title);
 
-
     // Если перемешивание выключено, переходим к следующей песне
     if (mixMusic) {
       mixMusicFunc()
@@ -85,7 +84,6 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
         setCurrentSong(songs[index + 1]);
       }
     }
-
 
     audioElem.current.currentTime = 0; // Сброс времени проигрывания
   };
@@ -122,6 +120,21 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
         break
     }
   }
+
+  // // тут нужно сделать функционал повтора музыки
+  // useEffect(() => {
+  //   if (currentSong.length === currentSong.progress) {
+  //     if (repeatValue === 1) {
+  //       // отсутствие повтора
+  //     }
+  //     else if (repeatValue === 2) {
+  //       // повтор списка
+  //     }
+  //     else {
+  //       // повтор музыки (база)
+  //     }
+  //   }
+  // }, [repeatValue])
 
   return (
     <div className='player_container'>
