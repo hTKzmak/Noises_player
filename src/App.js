@@ -104,7 +104,7 @@ const App = () => {
           skiptoNext()
         }
         break
-        
+
       // вторая опция: будет заново воспроизводиться весь список музыки
       case 2:
         skiptoNext()
@@ -122,7 +122,6 @@ const App = () => {
 
   return (
     <div className="App">
-      {/* <audio src={currentSong.url} ref={audioElem} onTimeUpdate={onPlaying} onEnded={mixMusic ? mixMusicFunc : null} /> */}
       <audio
         src={currentSong.url}
         ref={audioElem}
