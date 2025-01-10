@@ -11,26 +11,26 @@ import { ReactComponent as RepeatOff } from '../assets/repeat_off.svg'
 import { ReactComponent as RepeatList } from '../assets/repeat_list.svg'
 import { ReactComponent as RepeatMusic } from '../assets/repeat_music.svg'
 
-const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusicFunc, mixMusic, setMixMusic }) => {
+const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusicFunc, mixMusic, setMixMusic, skipBack, skiptoNext, repeatValue, setRepeatValue}) => {
 
   // место события на разметке (input range)
   const inputRef = useRef();
 
+  // громкость музыки
   const volumeRef = useRef();
+  
+  // показывать ползунок для изменения громкости
   const [showVolume, setShowVolume] = useState(false);
 
   // значение громкости
   const [volumeCount, setVolumeCount] = useState(1);
-
-  // повторение музыки (1 - не повторяется ни список, ни музыка; 2 - повторяется только список; 3 - повторяется только трек)
-  const [repeatValue, setRepeatValue] = useState(1)
 
   // функция паузы и воспроизведения
   const PlayPause = () => {
     setIsPlaying(!isplaying);
   }
 
-  // проверяет на каком промежутке нахожится ползунов
+  // проверяет на каком промежутке находится ползунок
   const checkWidth = (e) => {
     // отслеживаем значение input range
     const offset = Number(e.target.value);
@@ -56,38 +56,6 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
     inputRef.current.style.background = `linear-gradient(90deg, ${activeColor} ${ratio}%, ${inactiveColor} ${ratio}%)`
 
   }, [currentSong.progress, currentSong.length]);
-
-  // пропуск музыки на предыдущую музыку
-  const skipBack = () => {
-    const index = songs.findIndex(x => x.title === currentSong.title);
-    if (index === 0) {
-      setCurrentSong(songs[songs.length - 1])
-    }
-    else {
-      setCurrentSong(songs[index - 1])
-    }
-    audioElem.current.currentTime = 0;
-  }
-
-  // пропуск музыки на следующую музыку
-  const skiptoNext = () => {
-    const index = songs.findIndex(x => x.title === currentSong.title);
-
-    // Если перемешивание выключено, переходим к следующей песне
-    if (mixMusic) {
-      mixMusicFunc()
-    }
-    else {
-      if (index === songs.length - 1) {
-        setCurrentSong(songs[0]);
-      } else {
-        setCurrentSong(songs[index + 1]);
-      }
-    }
-
-    audioElem.current.currentTime = 0; // Сброс времени проигрывания
-  };
-
 
 
   // ОПЦИИ:
@@ -120,21 +88,6 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
         break
     }
   }
-
-  // // тут нужно сделать функционал повтора музыки
-  // useEffect(() => {
-  //   if (currentSong.length === currentSong.progress) {
-  //     if (repeatValue === 1) {
-  //       // отсутствие повтора
-  //     }
-  //     else if (repeatValue === 2) {
-  //       // повтор списка
-  //     }
-  //     else {
-  //       // повтор музыки (база)
-  //     }
-  //   }
-  // }, [repeatValue])
 
   return (
     <div className='player_container'>
