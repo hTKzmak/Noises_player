@@ -10,15 +10,16 @@ import { ReactComponent as Download } from '../assets/download.svg'
 import { ReactComponent as RepeatOff } from '../assets/repeat_off.svg'
 import { ReactComponent as RepeatList } from '../assets/repeat_list.svg'
 import { ReactComponent as RepeatMusic } from '../assets/repeat_music.svg'
+import { ReactComponent as Arrow } from '../assets/arrow.svg'
 
-const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusicFunc, mixMusic, setMixMusic, skipBack, skiptoNext, repeatValue, setRepeatValue}) => {
+const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusicFunc, mixMusic, setMixMusic, skipBack, skiptoNext, repeatValue, setRepeatValue, showPlayer, setShowPlayer }) => {
 
   // место события на разметке (input range)
   const inputRef = useRef();
 
   // громкость музыки
   const volumeRef = useRef();
-  
+
   // показывать ползунок для изменения громкости
   const [showVolume, setShowVolume] = useState(false);
 
@@ -90,7 +91,10 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
   }
 
   return (
-    <div className='player_container'>
+    <div className='player_container' style={{ display: showPlayer ? 'flex' : 'none' }}>
+      <button className='showingPlayer' onClick={() => setShowPlayer(false)}>
+        <Arrow />
+      </button>
       <div className="controls">
         <button onClick={skipBack}>
           <BsFillSkipStartCircleFill className='btn_action' />

@@ -14,6 +14,22 @@
     left: 0;
     right: 0;
 
+    .showingPlayer {
+        display: none;
+        border: none;
+        background: none;
+
+        cursor: pointer;
+
+        @media screen and (max-width: 768px) {
+            display: flex;
+
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+    }
+
     .controls {
         font-size: inherit;
         display: flex;
@@ -93,7 +109,7 @@
                 .title {
                     font-size: 18px;
                     color: #fff;
-                    
+
                     @media screen and (max-width: 768px) {
                         font-size: 28px;
                     }
@@ -133,7 +149,7 @@
                 align-items: center;
             }
         }
-        
+
         input {
             max-width: 761px;
             width: 40vw;
@@ -143,14 +159,14 @@
                 width: 100%;
             }
         }
-        
+
         @media screen and (max-width: 1150px) {
             display: flex;
             align-items: flex-start;
             flex-direction: column;
             gap: 5px;
         }
-        
+
         @media screen and (max-width: 768px) {
             order: 1;
             gap: 35px;

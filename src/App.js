@@ -11,6 +11,9 @@ const App = () => {
   // текущая музыка (стоит первая ммузыка по index)
   const [currentSong, setCurrentSong] = useState(songsdata[0]);
 
+  // отображение плеера
+  const [showPlayer, setShowPlayer] = useState(true)
+
   // перемешивать список музыки (true - да; false - нет)
   const [mixMusic, setMixMusic] = useState(false);
 
@@ -153,6 +156,9 @@ const App = () => {
         skiptoNext={skiptoNext}
         repeatValue={repeatValue}
         setRepeatValue={setRepeatValue}
+
+        showPlayer={showPlayer}
+        setShowPlayer={setShowPlayer}
       />
     </div>
   );
