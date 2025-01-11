@@ -2,6 +2,7 @@ import './App.css';
 import Player from './Player/Player';
 import { songsdata } from './Player/audios';
 import { useRef, useState, useEffect, useCallback } from 'react';
+import PlayerMobile from './PlayerMobile/PlayerMobile';
 
 const App = () => {
   // песни (json)
@@ -12,7 +13,8 @@ const App = () => {
   const [currentSong, setCurrentSong] = useState(songsdata[0]);
 
   // отображение плеера
-  const [showPlayer, setShowPlayer] = useState(true)
+  const [showPlayer, setShowPlayer] = useState(true);
+  const [showMobilePlayer, setShowMobilePlayer] = useState(true);
 
   // перемешивать список музыки (true - да; false - нет)
   const [mixMusic, setMixMusic] = useState(false);
@@ -136,6 +138,19 @@ const App = () => {
           repeatMusicFunc(); // Вызов функции для обработки завершения
         }}
       />
+
+      <PlayerMobile
+        isplaying={isplaying}
+        setIsPlaying={setIsPlaying}
+
+        currentSong={currentSong}
+
+        setShowPlayer={setShowPlayer}
+        
+        showMobilePlayer={showMobilePlayer}
+        setShowMobilePlayer={setShowMobilePlayer}
+      />
+
       <Player
         songs={songs}
         setSongs={setSongs}
