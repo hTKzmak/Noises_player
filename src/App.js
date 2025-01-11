@@ -146,7 +146,7 @@ const App = () => {
         currentSong={currentSong}
 
         setShowPlayer={setShowPlayer}
-        
+
         showMobilePlayer={showMobilePlayer}
         setShowMobilePlayer={setShowMobilePlayer}
       />
