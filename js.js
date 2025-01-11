@@ -1,44 +1,71 @@
-export const songsdata = [
+let songsdata = [
     {
         "title": "Death Bed",
         "artist": "Powfu",
         "artwork": "https://samplesongs.netlify.app/album-arts/death-bed.jpg",
         "url": "https://samplesongs.netlify.app/Death%20Bed.mp3",
-        "id": 1
+        "id": "1"
     },
     {
         "title": "Bad Liar",
         "artist": "Imagine Dragons",
         "artwork": "https://samplesongs.netlify.app/album-arts/bad-liar.jpg",
         "url": "https://samplesongs.netlify.app/Bad%20Liar.mp3",
-        "id": 2
+        "id": "2"
     },
     {
         "title": "Faded",
         "artist": "Alan Walker",
         "artwork": "https://samplesongs.netlify.app/album-arts/faded.jpg",
         "url": "https://samplesongs.netlify.app/Faded.mp3",
-        "id": 3
+        "id": "3"
     },
     {
         "title": "Hate Me",
         "artist": "Ellie Goulding",
         "artwork": "https://samplesongs.netlify.app/album-arts/hate-me.jpg",
         "url": "https://samplesongs.netlify.app/Hate%20Me.mp3",
-        "id": 4
+        "id": "4"
     },
     {
         "title": "Solo",
         "artist": "Clean Bandit",
         "artwork": "https://samplesongs.netlify.app/album-arts/solo.jpg",
         "url": "https://samplesongs.netlify.app/Solo.mp3",
-        "id": 5
+        "id": "5"
     },
     {
         "title": "Without Me",
         "artist": "Halsey",
         "artwork": "https://samplesongs.netlify.app/album-arts/without-me.jpg",
         "url": "https://samplesongs.netlify.app/Without%20Me.mp3",
-        "id": 6
+        "id": "6"
     }
 ];
+
+let mixedData = [];
+
+function shuffle() {
+    // Создаем копию массива songsdata
+    let arrayCopy = songsdata.slice();
+
+    let currentIndex = arrayCopy.length, temporaryValue, randomIndex;
+
+    // Пока есть элементы для перемешивания...
+    while (currentIndex !== 0) {
+        // Выбираем оставшийся элемент...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // И меняем его местами с текущим элементом.
+        temporaryValue = arrayCopy[currentIndex];
+        arrayCopy[currentIndex] = arrayCopy[randomIndex];
+        arrayCopy[randomIndex] = temporaryValue;
+    }
+
+    // Сохраняем перемешанные данные в mixedData
+    mixedData = arrayCopy;
+    return mixedData;
+}
+
+console.log(shuffle());

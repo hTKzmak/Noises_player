@@ -12,7 +12,7 @@ import { ReactComponent as RepeatList } from '../assets/repeat_list.svg'
 import { ReactComponent as RepeatMusic } from '../assets/repeat_music.svg'
 import { ReactComponent as Arrow } from '../assets/arrow.svg'
 
-const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusicFunc, mixMusic, setMixMusic, skipBack, skiptoNext, repeatValue, setRepeatValue, showPlayer, setShowPlayer }) => {
+const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusic, setMixMusic, skipBack, skiptoNext, repeatValue, setRepeatValue, showPlayer, setShowPlayer }) => {
 
   // место события на разметке (input range)
   const inputRef = useRef();

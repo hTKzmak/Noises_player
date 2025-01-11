@@ -1,7 +1,7 @@
 import './App.css';
 import Player from './Player/Player';
 import { songsdata } from './Player/audios';
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import PlayerMobile from './PlayerMobile/PlayerMobile';
 
 const App = () => {
@@ -25,6 +25,34 @@ const App = () => {
   // место события на разметке (audio тег)
   const audioElem = useRef();
 
+  // массив с перемешанными индексами музыки
+  const [mixSongsdata, setMixSongsdata] = useState([])
+
+  // Одна из опций плеера: перемешивание музыки (данные songsdata)
+  useEffect(() => {
+    // Создаем копию массива songsdata
+    let arrayCopy = songsdata.slice();
+
+    let currentIndex = arrayCopy.length, temporaryValue, randomIndex;
+
+    // Пока есть элементы для перемешивания...
+    while (currentIndex !== 0) {
+      // Выбираем оставшийся элемент...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // И меняем его местами с текущим элементом.
+      temporaryValue = arrayCopy[currentIndex];
+      arrayCopy[currentIndex] = arrayCopy[randomIndex];
+      arrayCopy[randomIndex] = temporaryValue;
+    }
+
+    // Сохраняем перемешанные данные в mixedData
+    setMixSongsdata(arrayCopy);
+  }, [])
+
+  console.log('обычные данные', songsdata)
+  console.log('перемешанные данные', mixSongsdata)
 
 
   // воспроизведение и остановка музыки
@@ -53,25 +81,41 @@ const App = () => {
 
   // пропуск музыки на предыдущую музыку
   const skipBack = () => {
-    const index = songs.findIndex(x => x.title === currentSong.title);
-    if (index === 0) {
-      setCurrentSong(songs[songs.length - 1])
+    if (mixMusic) {
+      const index = mixSongsdata.findIndex(x => x.title === currentSong.title);
+      if (index === 0) {
+        setCurrentSong(mixSongsdata[mixSongsdata.length - 1])
+      }
+      else {
+        setCurrentSong(mixSongsdata[index - 1])
+      }
     }
     else {
-      setCurrentSong(songs[index - 1])
+      const index = songs.findIndex(x => x.title === currentSong.title);
+      if (index === 0) {
+        setCurrentSong(songs[songs.length - 1])
+      }
+      else {
+        setCurrentSong(songs[index - 1])
+      }
     }
     audioElem.current.currentTime = 0;
   }
 
   // пропуск музыки на следующую музыку
   const skiptoNext = () => {
-    const index = songs.findIndex(x => x.title === currentSong.title);
 
-    // Если перемешивание выключено, переходим к следующей песне
     if (mixMusic) {
-      mixMusicFunc()
+      const index = mixSongsdata.findIndex(x => x.title === currentSong.title);
+      if (index === mixSongsdata.length - 1) {
+        setCurrentSong(mixSongsdata[0]);
+      } else {
+        setCurrentSong(mixSongsdata[index + 1]);
+      }
     }
+    // Если перемешивание выключено, переходим к следующей песне
     else {
+      const index = songs.findIndex(x => x.title === currentSong.title);
       if (index === songs.length - 1) {
         setCurrentSong(songs[0]);
       } else {
@@ -86,32 +130,7 @@ const App = () => {
 
   // ОПЦИИ
 
-  // перемешивание музыки (может повторно воспроизводиться музыка, которая была прошлой)
-  // пример вывода индекса в консоли
-  // 1 Player.jsx:110
-  // 4 Player.jsx:110 (4 раза выводится)
-  // 5 Player.jsx:110
-  const mixMusicFunc = useCallback(() => {
-    const randomIndex = Math.floor(Math.random() * songs.length);
-    setCurrentSong(songs[randomIndex]);
-  }, [setCurrentSong, songs]);
-
-  // НЬЮ РАНДОМ
-  // let arr = [];
-
-  // // вместо 7 нужно заменить на songs.length
-  // while (arr.length < 7) {
-  //   // вместо 7 нужно заменить на songs.length
-  //   let num = Math.floor(Math.random() * 7);
-  //   if (!arr.includes(num)) {
-  //     arr.push(num);
-  //   }
-  // }
-
-  // console.log(arr);
-
-  // // по итогу: воспроизводим музыку по списку из массива, а выбранная музыка будет дальше играть, но следующия музыка будет из массива (после музыки с индексом 1 будет музыка, например, с индексом 6)
-
+  // перемешивание музыки (наверху)
 
   const repeatMusicFunc = () => {
     const index = songs.findIndex(x => x.title === currentSong.title);
@@ -149,7 +168,7 @@ const App = () => {
         onTimeUpdate={onPlaying}
         onEnded={() => {
           if (mixMusic) {
-            mixMusicFunc(); // Вызов функции для перемешивания музыки, если условие выполнено
+            skiptoNext();
           }
           repeatMusicFunc(); // Вызов функции для обработки завершения
         }}
@@ -179,7 +198,6 @@ const App = () => {
         currentSong={currentSong}
         setCurrentSong={setCurrentSong}
 
-        mixMusicFunc={mixMusicFunc}
         mixMusic={mixMusic}
         setMixMusic={setMixMusic}
 
