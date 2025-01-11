@@ -96,6 +96,22 @@ const App = () => {
     setCurrentSong(songs[randomIndex]);
   }, [setCurrentSong, songs]);
 
+  // НЬЮ РАНДОМ
+  // let arr = [];
+
+  // // вместо 7 нужно заменить на songs.length
+  // while (arr.length < 7) {
+  //   // вместо 7 нужно заменить на songs.length
+  //   let num = Math.floor(Math.random() * 7);
+  //   if (!arr.includes(num)) {
+  //     arr.push(num);
+  //   }
+  // }
+
+  // console.log(arr);
+
+  // // по итогу: воспроизводим музыку по списку из массива, а выбранная музыка будет дальше играть, но следующия музыка будет из массива (после музыки с индексом 1 будет музыка, например, с индексом 6)
+
 
   const repeatMusicFunc = () => {
     const index = songs.findIndex(x => x.title === currentSong.title);
