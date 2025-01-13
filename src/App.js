@@ -19,14 +19,15 @@ const App = () => {
   // перемешивать список музыки (true - да; false - нет)
   const [mixMusic, setMixMusic] = useState(false);
 
+  // массив с перемешанными индексами музыки
+  const [mixSongsdata, setMixSongsdata] = useState([])
+
   // повторение музыки (1 - не повторяется ни список, ни музыка; 2 - повторяется только список; 3 - повторяется только трек)
   const [repeatValue, setRepeatValue] = useState(1)
 
   // место события на разметке (audio тег)
   const audioElem = useRef();
 
-  // массив с перемешанными индексами музыки
-  const [mixSongsdata, setMixSongsdata] = useState([])
 
   // Одна из опций плеера: перемешивание музыки (данные songsdata)
   useEffect(() => {
@@ -51,6 +52,7 @@ const App = () => {
     setMixSongsdata(arrayCopy);
   }, [])
 
+  console.log(mixSongsdata)
 
   // воспроизведение и остановка музыки
   useEffect(() => {
