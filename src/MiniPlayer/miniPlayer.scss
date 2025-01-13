@@ -1,7 +1,7 @@
 .playerMobile_container {
     background-color: #000000e6;
 
-    display: none;
+    display: flex;
     justify-content: space-between;
     align-items: center;
 
@@ -43,9 +43,5 @@
             font-size: 13px;
             color: #ffffff80;
         }
-    }
-
-    @media screen and (max-width: 768px) {
-        display: flex;
     }
 }

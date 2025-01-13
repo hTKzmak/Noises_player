@@ -1,9 +1,9 @@
-import './playerMobile.scss';
+import './miniPlayer.scss';
 import { BsFillPlayCircleFill, BsFillPauseCircleFill } from 'react-icons/bs';
 import { IoClose } from "react-icons/io5";
 
 
-const PlayerMobile = ({ isplaying, setIsPlaying, currentSong, setShowPlayer, showMobilePlayer, setShowMobilePlayer }) => {
+const MiniPlayer = ({ isplaying, setIsPlaying, currentSong, showPlayer, setShowPlayer, showMiniPlayer, setShowMiniPlayer }) => {
 
     // функция паузы и воспроизведения
     const PlayPause = () => {
@@ -13,11 +13,11 @@ const PlayerMobile = ({ isplaying, setIsPlaying, currentSong, setShowPlayer, sho
     const removePlayer = () => {
         setIsPlaying(false)
         setShowPlayer(false)
-        setShowMobilePlayer(false)
+        setShowMiniPlayer(false)
     }
 
     return (
-        <div className="playerMobile_container" style={{display: showMobilePlayer && window.innerWidth <= 768 ? 'flex' : 'none'}} onClick={() => setShowPlayer(true)}>
+        <div className="playerMobile_container" style={{ display: showMiniPlayer ? 'flex' : 'none' }} onClick={() => setShowPlayer(true)}>
             {isplaying ?
                 <button onClick={(e) => { e.stopPropagation(); PlayPause(); }}>
                     <BsFillPauseCircleFill className='btn_action pp' />
@@ -40,4 +40,4 @@ const PlayerMobile = ({ isplaying, setIsPlaying, currentSong, setShowPlayer, sho
     )
 }
 
-export default PlayerMobile 
+export default MiniPlayer 

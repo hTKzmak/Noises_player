@@ -12,7 +12,7 @@ import { ReactComponent as RepeatList } from '../assets/repeat_list.svg'
 import { ReactComponent as RepeatMusic } from '../assets/repeat_music.svg'
 import { ReactComponent as Arrow } from '../assets/arrow.svg'
 
-const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusic, setMixMusic, skipBack, skiptoNext, repeatValue, setRepeatValue, showPlayer, setShowPlayer }) => {
+const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSong, songs, mixMusic, setMixMusic, skipBack, skiptoNext, repeatValue, setRepeatValue, showPlayer, setShowPlayer, showMiniPlayer, setShowMiniPlayer }) => {
 
   // место события на разметке (input range)
   const inputRef = useRef();
@@ -89,6 +89,28 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
         break
     }
   }
+
+  // Отслеживание отображение основного плеера
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768 && showMiniPlayer) {
+        setShowPlayer(true);
+      }
+      else if(!showMiniPlayer){
+        setShowPlayer(false);
+      }
+      else{
+        setShowPlayer(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [setShowPlayer, showMiniPlayer]);
 
   return (
     <div className='player_container' style={{ display: showPlayer ? 'flex' : 'none' }}>

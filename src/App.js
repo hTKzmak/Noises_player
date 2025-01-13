@@ -2,7 +2,7 @@ import './App.css';
 import Player from './Player/Player';
 import { songsdata } from './Player/audios';
 import { useRef, useState, useEffect } from 'react';
-import PlayerMobile from './PlayerMobile/PlayerMobile';
+import MiniPlayer from './MiniPlayer/MiniPlayer';
 
 const App = () => {
   // песни (json)
@@ -14,7 +14,7 @@ const App = () => {
 
   // отображение плеера
   const [showPlayer, setShowPlayer] = useState(true);
-  const [showMobilePlayer, setShowMobilePlayer] = useState(true);
+  const [showMiniPlayer, setShowMiniPlayer] = useState(true);
 
   // перемешивать список музыки (true - да; false - нет)
   const [mixMusic, setMixMusic] = useState(false);
@@ -50,9 +50,6 @@ const App = () => {
     // Сохраняем перемешанные данные в mixedData
     setMixSongsdata(arrayCopy);
   }, [])
-
-  console.log('обычные данные', songsdata)
-  console.log('перемешанные данные', mixSongsdata)
 
 
   // воспроизведение и остановка музыки
@@ -174,16 +171,17 @@ const App = () => {
         }}
       />
 
-      <PlayerMobile
+      <MiniPlayer
         isplaying={isplaying}
         setIsPlaying={setIsPlaying}
 
         currentSong={currentSong}
 
+        showPlayer={showPlayer}
         setShowPlayer={setShowPlayer}
 
-        showMobilePlayer={showMobilePlayer}
-        setShowMobilePlayer={setShowMobilePlayer}
+        showMiniPlayer={showMiniPlayer}
+        setShowMiniPlayer={setShowMiniPlayer}
       />
 
       <Player
@@ -208,6 +206,9 @@ const App = () => {
 
         showPlayer={showPlayer}
         setShowPlayer={setShowPlayer}
+
+        showMiniPlayer={showMiniPlayer}
+        setShowMiniPlayer={setShowMiniPlayer}
       />
     </div>
   );
