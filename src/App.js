@@ -52,8 +52,6 @@ const App = () => {
     setMixSongsdata(arrayCopy);
   }, [])
 
-  console.log(mixSongsdata)
-
   // воспроизведение и остановка музыки
   useEffect(() => {
     if (isplaying) {

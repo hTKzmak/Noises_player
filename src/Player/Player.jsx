@@ -64,7 +64,7 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
   const downloadMusicFunc = async () => {
     const a = document.createElement('a');
     a.href = currentSong.url;
-    a.download = 'filename'; // Укажите нужное имя файла
+    a.download = currentSong.title; // Укажите нужное имя файла
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -97,9 +97,6 @@ const Player = ({ audioElem, isplaying, setIsPlaying, currentSong, setCurrentSon
         setShowPlayer(true);
       }
       else if(!showMiniPlayer){
-        setShowPlayer(false);
-      }
-      else{
         setShowPlayer(false);
       }
     };

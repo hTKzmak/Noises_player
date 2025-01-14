@@ -1,44 +1,42 @@
+import on_little_cat_feet_mp3 from '../music/on_little_cat_feet.mp3'
+import oneshot_ost_png from '../music/oneshot.jpg'
+
+import chiralium_mp3 from '../music/chiralium.mp3'
+import ds_ost_jpg from '../music/ds_ost.jpg'
+
+import desperate_mp3 from '../music/desperate.mp3'
+import ncs_jpg from '../music/ncs.jpg'
+
+import forgotten_mp3 from '../music/forgotten.mp3'
+import fez_jpg from '../music/fez.jpg'
+
 export const songsdata = [
     {
-        "title": "Death Bed",
-        "artist": "Powfu",
-        "artwork": "https://samplesongs.netlify.app/album-arts/death-bed.jpg",
-        "url": "https://samplesongs.netlify.app/Death%20Bed.mp3",
+        "title": "On Little Cat Feet",
+        "artist": "NightMargin",
+        "artwork": oneshot_ost_png,
+        "url": on_little_cat_feet_mp3,
         "id": 1
     },
     {
-        "title": "Bad Liar",
-        "artist": "Imagine Dragons",
-        "artwork": "https://samplesongs.netlify.app/album-arts/bad-liar.jpg",
-        "url": "https://samplesongs.netlify.app/Bad%20Liar.mp3",
+        "title": "Chiralium",
+        "artist": "Ludwig Forssell",
+        "artwork": ds_ost_jpg,
+        "url": chiralium_mp3,
         "id": 2
     },
     {
-        "title": "Faded",
-        "artist": "Alan Walker",
-        "artwork": "https://samplesongs.netlify.app/album-arts/faded.jpg",
-        "url": "https://samplesongs.netlify.app/Faded.mp3",
+        "title": "Desperate",
+        "artist": "No Copyright Sound",
+        "artwork": ncs_jpg,
+        "url": desperate_mp3,
         "id": 3
     },
     {
-        "title": "Hate Me",
-        "artist": "Ellie Goulding",
-        "artwork": "https://samplesongs.netlify.app/album-arts/hate-me.jpg",
-        "url": "https://samplesongs.netlify.app/Hate%20Me.mp3",
+        "title": "Forgotten",
+        "artist": "Fez - OST",
+        "artwork": fez_jpg,
+        "url": forgotten_mp3,
         "id": 4
     },
-    {
-        "title": "Solo",
-        "artist": "Clean Bandit",
-        "artwork": "https://samplesongs.netlify.app/album-arts/solo.jpg",
-        "url": "https://samplesongs.netlify.app/Solo.mp3",
-        "id": 5
-    },
-    {
-        "title": "Without Me",
-        "artist": "Halsey",
-        "artwork": "https://samplesongs.netlify.app/album-arts/without-me.jpg",
-        "url": "https://samplesongs.netlify.app/Without%20Me.mp3",
-        "id": 6
-    }
 ];
